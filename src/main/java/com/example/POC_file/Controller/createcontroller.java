@@ -8,9 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @RestController
 @RequestMapping("/general")
@@ -194,6 +196,35 @@ public class createcontroller {
 
     }
 
+    @GetMapping("/pdftotextfile")
+    public Object pdftotextfile(@RequestParam MultipartFile file){
+       try {
+           File file1 = new File(String.valueOf(rootLocation));
+           if(!file1.exists()){
+               if(file1.mkdirs()){
+                   System.out.println("Successfully directory created");
+               }
+               else {
+                   System.out.println("cannot be able to create directory");
+               }
+           }
+           else {
+               System.out.println("Directory Already exist");
+           }
+           String filename = file.getOriginalFilename();
+           InputStream inputStream = file.getInputStream();
+///*           private final String baseFolderStr = "Files/upload";
+//           private final Path rootLocation = Paths.get(baseFolderStr);*/
+           Path finalpath = Paths.get(baseFolderStr+"\\"+filename);
+           System.out.println(finalpath);
+           System.out.println(rootLocation);
+           Files.copy(inputStream,finalpath, StandardCopyOption.REPLACE_EXISTING);
+           return finalpath;
+       }
+       catch (Exception e){
+             throw new RuntimeException("its not my Fault");
+       }
+    }
 
 
 
