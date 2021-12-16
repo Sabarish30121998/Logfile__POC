@@ -215,7 +215,7 @@ public class createcontroller {
            InputStream inputStream = file.getInputStream();
 ///*           private final String baseFolderStr = "Files/upload";
 //           private final Path rootLocation = Paths.get(baseFolderStr);*/
-           Path finalpath = Paths.get(baseFolderStr+"\\"+filename);
+           Path finalpath = Paths.get(baseFolderStr+"/"+filename);
            System.out.println(finalpath);
            System.out.println(rootLocation);
            Files.copy(inputStream,finalpath, StandardCopyOption.REPLACE_EXISTING);
